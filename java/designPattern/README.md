@@ -47,8 +47,49 @@ data class Book(val name: String)
 - あとゲッターセッターがいらない。
 
 - overrideはアノテーションではなく明示的に行う必要がある
+
 ```Kotlin
 
 override fun test(){ println("test") }
+
+```
+
+#### Kotlinって実は・・・
+デフォルトでclassはjavaでいうところの`final`であるからして、継承はできない。
+継承するためにはクラス名の前に`open`と明示的につけてやる必要があるのである。
+
+#### コンストラクタ
+コンストラクタっていうのは、インスタンス生成（javaでいう`new`）時に実行されるメソッドを指す。
+
+```Java
+
+public class ConstractorTest {
+  private int con;
+  private String concon;
+
+  public ConstractorTest(int con, String concon) {
+    this.con = con;
+    this.concon = concon;
+  }
+}
+
+```
+
+だけど、Kotlinだとコンストラクタはクラス名の後ろにつけとけば、勝手に作ってくれる。
+
+```Kotlin
+
+class ConstractorTest(private val con: Int, private val concon: String) {}
+
+```
+
+ちなみにコンストラクタを持ったクラスを継承する場合、
+
+```Kotlin
+
+// スーパークラス
+open class ConstractorTest(val concon: String)
+// サブクラス
+class ConstractorTest(concon: String) : Human(concon)
 
 ```

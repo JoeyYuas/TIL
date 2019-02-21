@@ -1,10 +1,4 @@
-//Iterator＝反復処理についてのパターン
-//Aggregateインターフェース＝＞集合体を意味する。
-
-//Aggregateインターフェースはiteratorメソッドのみ実装している
-//集合体を数え上げたい、スキャンしたい、１つずつ調べていきたいというとき、
-//iteratorメソッドを呼び出す。
-interface Aggregate {
+/* interface Aggregate {
   abstract fun iterator() :Iterator
 }
 
@@ -12,10 +6,12 @@ interface Iterator {
   abstract fun hasNext(): Boolean
   abstract fun next(): Any
 }
+*/
 
 data class Book(val name: String)
 
-class BookShelf(maxsize: Int): Aggregate {
+
+class BookShelf(maxsize: Int){
   val books: Array<Book?> = arrayOfNulls(maxsize)
   var last: Int = 0
 
@@ -27,14 +23,18 @@ class BookShelf(maxsize: Int): Aggregate {
     this.books[last] = book
     last ++
   }
-
+/*
   override fun iterator(): Iterator{
     return BookShelfIterator(this)
   }
+*/
+
 }
 
-class BookShelfIterator(val bookShelf: BookShelf): Iterator{
-  var index: Int = 0
+/*
+class BookShelfIterator(bookShelf: BookShelf): Iterator{
+  private var index: Int = 0
+  private val bookShelf: BookShelf = bookShelf
 
   override fun hasNext(): Boolean{
     if(index < bookShelf.last) {
@@ -49,16 +49,18 @@ class BookShelfIterator(val bookShelf: BookShelf): Iterator{
     return book as Any
   }
 }
+*/
 
 fun main(args: Array<String>){
-
   val bookShelf: BookShelf = BookShelf(4)
   bookShelf.appendBook(Book("Around the World in 80 Days"))
   bookShelf.appendBook(Book("Bible"))
   bookShelf.appendBook(Book("Cinderella"))
   bookShelf.appendBook(Book("Daddy-Long-Legs"))
 
-  val it = bookShelf.iterator()
+  val books = bookShelf.books
+  val it = books.iterator()
+
   while(it.hasNext()){
     val book: Book = it.next() as Book
     println(book.name)
