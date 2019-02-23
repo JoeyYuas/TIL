@@ -106,3 +106,36 @@ class IDCard(val owner : String) : Product() {
 ```
 
 とのように`init{処理}`で書ける
+
+- JavaのダウンキャストはKotlinだと以下の通り
+
+```Kotlin
+
+override fun registerProduct(product : Product) {
+    if(product is IDCard){
+      owners.add(product.getOwner())
+    }
+}
+
+```
+
+上記のような形をスマートキャストと呼ぶ。
+（実質ダウンキャスト）
+
+また、`product as IDCard`とも書ける。
+
+- KotlinのSingleton
+
+```Kotlin
+
+object Singleton {
+  init {
+    初期化処理
+  }
+}
+
+val obj1 = Singleton
+
+```
+
+object（Singleton）はコンストラクタを持てないので、インスタンスを生成するときに()は不要
