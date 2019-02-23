@@ -93,3 +93,16 @@ open class ConstractorTest(val concon: String)
 class ConstractorTest(concon: String) : Human(concon)
 
 ```
+
+ちなちなみにKotlinでコンストラクタの引数を用いた初期化処理（メソッド）を行いたい場合、
+
+```Kotlin
+
+class IDCard(val owner : String) : Product() {
+    init {
+	    println("${owner}のカードを作ります")
+    }
+
+```
+
+とのように`init{処理}`で書ける
