@@ -8,6 +8,7 @@ javaと違ってデフォルトで`public`だから、書く必要はまずな�
 #### Kotlinのデータクラス
 Kotlinはデータだけを保持するクラスを作れるらしい。
 例えば、javaだと
+
 ```java
 public class Book {
   private String name;
@@ -107,7 +108,7 @@ class IDCard(val owner : String) : Product() {
 
 とのように`init{処理}`で書ける
 
-- JavaのダウンキャストはKotlinだと以下の通り
+#### JavaのダウンキャストはKotlinだと以下の通り
 
 ```Kotlin
 
@@ -124,7 +125,7 @@ override fun registerProduct(product : Product) {
 
 また、`product as IDCard`とも書ける。
 
-- KotlinのSingleton
+#### KotlinのSingleton
 
 ```Kotlin
 
@@ -139,3 +140,28 @@ val obj1 = Singleton
 ```
 
 object（Singleton）はコンストラクタを持てないので、インスタンスを生成するときに()は不要
+
+#### 可変長の配列を引数にとる場合
+
+```Kotlin
+
+fun makeItems(vararg items : String){
+  for (item in items){
+    buffer.append(" ・ ${item} \n")
+  }
+  buffer.append("\n")
+}
+
+```
+
+`vararg`と書くことで、可変長であることを示している。
+
+#### 文字列の結合
+
+Javaも同様だが、文字列を結合するにはいくつか方法がある。
+最も簡単なのは `”String” += ”String2”` であり、これを出力すると`StringString2`となる。
+
+だが、このようにして文字列を結合した場合、見た目上は結合されただけのように見えるがそもそもStringはimmutableなオブジェクトである。よって内部の挙動としては新規にオブジェクトを生成してそこにポインタを入れ替えているだけであり、結果メモリ的に非効率なものになっていく
+
+よって、`StringBuider`を使う。
+[リファレンス](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-string-builder/index.html)
