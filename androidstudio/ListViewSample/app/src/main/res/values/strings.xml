@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">ListViewSample</string>
+    <string name="app_name">リスト選択サンプル</string>
+    <string-array name="lv_menu">
+        <item>aaaaa</item>
+        <item>b</item>
+        <item>c</item>
+    </string-array>
 </resources>
