@@ -5,6 +5,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,15 @@ import android.widget.SimpleAdapter
 class MenuListFragment : Fragment() {
 
     private lateinit var _parentActivity : Activity
+    private  var _isLayoutXLarge = true
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val menuThanksFrame = _parentActivity.findViewById<View>(R.id.menuThanksFrame)
+        if(menuThanksFrame == null) {
+            _isLayoutXLarge = false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +65,30 @@ class MenuListFragment : Fragment() {
             val menuName : String = item["name"]!!
             val menuPrice : String = item["price"]!!
 
-            val intent = Intent(_parentActivity, MenuThanksActivity::class.java)
-            intent.putExtra("menuName", menuName)
-            intent.putExtra("menuPrice", menuPrice)
+            val bundle = Bundle()
+            bundle.putString("menuName", menuName)
+            bundle.putString("menuPrice", menuPrice)
 
-            startActivity(intent)
+            if(_isLayoutXLarge) {
+                val manager : FragmentManager? = fragmentManager
+                if(manager != null) {
+                    val transaction: FragmentTransaction? = manager.beginTransaction()
+                    val menuThanksFragment = MenuThanksFragment()
+                    menuThanksFragment.arguments = bundle
+                    transaction?.replace(R.id.menuThanksFrame, menuThanksFragment)
+                    transaction?.commit()
+                }
+            } else {
+                val intent = Intent(_parentActivity, MenuThanksActivity::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
+
+//            val intent = Intent(_parentActivity, MenuThanksActivity::class.java)
+//            intent.putExtra("menuName", menuName)
+//            intent.putExtra("menuPrice", menuPrice)
+//
+//            startActivity(intent)
         }
 
 
